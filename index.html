@@ -1,0 +1,2037 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>꼬꼬단 블록스 - 말랑말랑 마카롱 젤리 한국어 단어 퍼즐</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@500;700;900&family=Gaegu:wght@700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-midnight: #161324;
+      --bg-card: rgba(30, 27, 49, 0.75);
+      --border-soft: rgba(255, 255, 255, 0.12);
+      
+      /* 4-Color Macaron Jelly Palette with glossy 3D shadows */
+      --jelly-pink-bg: linear-gradient(180deg, #ff8da6 0%, #ff597e 60%, #e0325b 100%);
+      --jelly-pink-shadow: #b21b40;
+      
+      --jelly-yellow-bg: linear-gradient(180deg, #ffe082 0%, #ffca28 60%, #f59e0b 100%);
+      --jelly-yellow-shadow: #b45309;
+      
+      --jelly-mint-bg: linear-gradient(180deg, #4ef2c3 0%, #06d6a0 60%, #059669 100%);
+      --jelly-mint-shadow: #047857;
+      
+      --jelly-purple-bg: linear-gradient(180deg, #bf8cf7 0%, #a06cd5 60%, #7e38ba 100%);
+      --jelly-purple-shadow: #5b2195;
+      
+      --danger-line-color: #ff477e;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      height: 100dvh;
+      max-height: 100dvh;
+      overflow: hidden;
+    }
+
+    body {
+      background-color: var(--bg-midnight);
+      background-image: 
+        radial-gradient(circle at 20% 15%, rgba(160, 108, 213, 0.28) 0%, transparent 45%),
+        radial-gradient(circle at 80% 75%, rgba(255, 107, 139, 0.24) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(6, 214, 160, 0.12) 0%, transparent 60%);
+      color: #ffffff;
+      font-family: 'Noto Sans KR', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    /* Floating candy background sparkles */
+    .bg-sparkle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.4);
+      pointer-events: none;
+      animation: floatSparkle 7s infinite ease-in-out;
+    }
+    @keyframes floatSparkle {
+      0%, 100% { transform: translateY(0) scale(0.8); opacity: 0.2; }
+      50% { transform: translateY(-30px) scale(1.4); opacity: 0.7; }
+    }
+
+    /* Layout Container: Exactly fits screen height */
+    .game-wrapper {
+      width: 100%;
+      max-width: 520px;
+      height: 100%;
+      height: 100dvh;
+      max-height: 100dvh;
+      padding: 8px 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 6px;
+      position: relative;
+      z-index: 10;
+    }
+
+    header {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 8px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+      flex-shrink: 0;
+    }
+
+    .brand-title {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-logo-icon {
+      font-size: 1.35rem;
+      animation: jellyWiggle 2.4s infinite ease-in-out;
+      display: inline-block;
+    }
+
+    @keyframes jellyWiggle {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      20% { transform: scale(1.15, 0.85) rotate(-6deg); }
+      40% { transform: scale(0.9, 1.1) rotate(6deg); }
+      60% { transform: scale(1.05, 0.95) rotate(-2deg); }
+      80% { transform: scale(1) rotate(0deg); }
+    }
+
+    .brand-title h1 {
+      font-family: 'Jua', sans-serif;
+      font-size: 1.3rem;
+      background: linear-gradient(135deg, #ffd166, #ff8da6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+    }
+
+    .badge-sub {
+      font-size: 0.65rem;
+      color: #c4b5fd;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .diff-badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 999px;
+      margin-left: 6px;
+      vertical-align: middle;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+    .diff-badge:hover {
+      transform: scale(1.08);
+    }
+    .diff-easy {
+      background: linear-gradient(135deg, #4ef2c3, #06d6a0);
+      color: #044331;
+    }
+    .diff-normal {
+      background: linear-gradient(135deg, #ffe082, #ffca28);
+      color: #4a2800;
+    }
+    .diff-hard {
+      background: linear-gradient(135deg, #ff8da6, #ff477e);
+      color: #fff;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .stats-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(18, 16, 32, 0.65);
+      padding: 5px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .stat-pill {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .stat-label {
+      font-size: 0.58rem;
+      color: #9d9bb3;
+      font-weight: 700;
+    }
+
+    .stat-val {
+      font-family: 'Jua', sans-serif;
+      font-size: 1.05rem;
+      color: #ffd166;
+      line-height: 1.1;
+      text-shadow: 0 2px 6px rgba(255, 209, 102, 0.4);
+    }
+
+    .btn-sound {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #f1f0f7;
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .btn-sound:hover {
+      transform: scale(1.1);
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .board-container {
+      position: relative;
+      background: rgba(20, 18, 36, 0.85);
+      border: 2px solid rgba(255, 255, 255, 0.12);
+      border-radius: 22px;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45), inset 0 0 20px rgba(0, 0, 0, 0.5);
+      overflow: hidden;
+      flex: 1;
+      min-height: 0; /* Important for flex-child height constraints */
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Danger Boundary Zone (Row 0-1) */
+    .danger-zone {
+      position: absolute;
+      top: 14.28%; /* 1 / 7 rows */
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: repeating-linear-gradient(90deg, #ff477e, #ff477e 8px, transparent 8px, transparent 16px);
+      z-index: 15;
+      box-shadow: 0 0 10px rgba(255, 71, 126, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 8px;
+    }
+
+    .danger-label {
+      background: linear-gradient(135deg, #ff477e, #e0325b);
+      color: #fff;
+      font-size: 0.58rem;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 999px;
+      letter-spacing: 0.4px;
+      transform: translateY(-50%);
+      box-shadow: 0 2px 6px rgba(224, 50, 91, 0.5);
+    }
+
+    /* 8 Columns x 7 Rows Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      grid-template-rows: repeat(7, 1fr);
+      width: 100%;
+      height: 100%;
+      gap: 5px;
+      padding: 6px;
+    }
+
+    .cell {
+      position: relative;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1px;
+      transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease;
+    }
+
+    .cell.empty {
+      background: rgba(255, 255, 255, 0.015);
+      border-radius: 12px;
+      border: 1px dashed rgba(255, 255, 255, 0.04);
+    }
+
+    .block {
+      width: 100%;
+      height: 100%;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Jua', sans-serif;
+      font-size: clamp(0.76rem, 2.7vw, 1.05rem);
+      letter-spacing: -0.3px;
+      position: relative;
+      word-break: keep-all;
+      text-align: center;
+      line-height: 1.1;
+      padding: 2px;
+      color: #ffffff;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+      cursor: default;
+      transition: transform 0.15s ease, filter 0.15s ease;
+      overflow: hidden;
+    }
+
+    /* Glossy 3D Highlight Reflection on top */
+    .block::before {
+      content: "";
+      position: absolute;
+      top: 2px;
+      left: 6px;
+      right: 6px;
+      height: 38%;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.08) 100%);
+      border-radius: 9px 9px 5px 5px;
+      pointer-events: none;
+    }
+
+    /* 4 Macaron Colors with distinctive button depth */
+    .color-pink {
+      background: var(--jelly-pink-bg);
+      box-shadow: 0 4px 0 var(--jelly-pink-shadow), 0 6px 12px rgba(255, 89, 126, 0.35);
+    }
+    .color-yellow {
+      background: var(--jelly-yellow-bg);
+      box-shadow: 0 4px 0 var(--jelly-yellow-shadow), 0 6px 12px rgba(255, 202, 40, 0.35);
+      color: #4a2800;
+      text-shadow: 0 1px 1px rgba(255, 255, 255, 0.4);
+    }
+    .color-mint {
+      background: var(--jelly-mint-bg);
+      box-shadow: 0 4px 0 var(--jelly-mint-shadow), 0 6px 12px rgba(6, 214, 160, 0.35);
+    }
+    .color-purple {
+      background: var(--jelly-purple-bg);
+      box-shadow: 0 4px 0 var(--jelly-purple-shadow), 0 6px 12px rgba(160, 108, 213, 0.35);
+    }
+
+    @keyframes jellyBouncePop {
+      0% { transform: scale(1); }
+      30% { transform: scale(1.22, 0.82); }
+      50% { transform: scale(0.85, 1.18); }
+      70% { transform: scale(1.12, 0.92); }
+      100% { transform: scale(1.08, 1.04); }
+    }
+
+    .cell.target-pulse .block {
+      animation: jellyBouncePop 0.8s infinite alternate ease-in-out;
+      border: 3px solid #ffffff !important;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.95), 0 6px 0 rgba(0,0,0,0.3) !important;
+      z-index: 25;
+      filter: brightness(1.2);
+    }
+
+    /* Target badge with sparkling emoji */
+    .target-eval-badge {
+      position: absolute;
+      top: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, #ffd166, #ff8da6);
+      color: #1a162b;
+      font-family: 'Jua', sans-serif;
+      font-size: 0.72rem;
+      padding: 2px 9px;
+      border-radius: 999px;
+      white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6), 0 0 14px rgba(255, 209, 102, 0.8);
+      z-index: 35;
+      pointer-events: none;
+      animation: popInBounce 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    @keyframes popInBounce {
+      0% { transform: translateX(-50%) scale(0.3); opacity: 0; }
+      100% { transform: translateX(-50%) scale(1); opacity: 1; }
+    }
+
+    /* Cluster connection glow */
+    .cell.cluster-glow .block {
+      animation: clusterJiggle 0.35s ease-in-out;
+      border: 2px solid #ffffff;
+      filter: brightness(1.3);
+    }
+
+    @keyframes clusterJiggle {
+      0%, 100% { transform: scale(1); }
+      30% { transform: scale(1.08, 0.94); }
+      70% { transform: scale(0.96, 1.06); }
+    }
+
+    /* Locked Block with soft cartoon lock */
+    .cell.locked .block {
+      filter: grayscale(0.85) brightness(0.65);
+      border: 2px dashed #ff477e !important;
+    }
+
+    .lock-badge {
+      position: absolute;
+      top: 1px;
+      right: 2px;
+      font-size: 0.85rem;
+      z-index: 25;
+      animation: lockShake 0.4s ease;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8));
+    }
+
+    @keyframes lockShake {
+      0%, 100% { transform: rotate(0); }
+      25% { transform: rotate(-14deg); }
+      75% { transform: rotate(14deg); }
+    }
+
+    .cell.exploding {
+      transform: scale(0.01) rotate(20deg);
+      opacity: 0;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.28s ease;
+    }
+
+    /* Drop animation for 3 newly dropped blocks */
+    .cell.spawn-drop .block {
+      animation: dropBouncy 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    @keyframes dropBouncy {
+      0% { transform: translateY(-70px) scale(0.4); opacity: 0; }
+      70% { transform: translateY(6px) scale(1.1, 0.9); opacity: 1; }
+      100% { transform: translateY(0) scale(1); opacity: 1; }
+    }
+
+    /* Particle canvas overlay */
+    #fxCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 30;
+    }
+
+    /* Floating Score Badge */
+    .floating-score {
+      position: absolute;
+      font-family: 'Jua', sans-serif;
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #ffd166;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.8), 0 0 16px rgba(255, 209, 102, 0.9);
+      pointer-events: none;
+      z-index: 35;
+      animation: floatUpFade 0.85s forwards cubic-bezier(0.2, 0.8, 0.3, 1);
+    }
+
+    @keyframes floatUpFade {
+      0% { opacity: 1; transform: translate(-50%, 0) scale(0.6); }
+      40% { opacity: 1; transform: translate(-50%, -20px) scale(1.3); }
+      100% { opacity: 0; transform: translate(-50%, -46px) scale(1); }
+    }
+
+    .input-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 8px 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* Capsule Input Field */
+    .hint-input {
+      flex: 1;
+      background: rgba(18, 16, 32, 0.85);
+      border: 2px solid rgba(255, 255, 255, 0.16);
+      border-radius: 9999px;
+      padding: 9px 18px;
+      color: #ffffff;
+      font-size: 1.02rem;
+      font-weight: 700;
+      font-family: 'Noto Sans KR', sans-serif;
+      outline: none;
+      transition: all 0.2s ease;
+      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
+    }
+
+    .hint-input:focus {
+      border-color: #ffd166;
+      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4), 0 0 16px rgba(255, 209, 102, 0.4);
+      background: rgba(22, 19, 38, 0.95);
+    }
+
+    .hint-input.shake {
+      animation: shakeCapsule 0.36s ease-in-out;
+      border-color: #ff477e !important;
+      box-shadow: 0 0 16px rgba(255, 71, 126, 0.6) !important;
+    }
+
+    @keyframes shakeCapsule {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-8px); }
+      40%, 80% { transform: translateX(8px); }
+    }
+
+    /* Capsule Rocket Submit Button */
+    .btn-submit {
+      background: linear-gradient(135deg, #ff6b8b, #ff477e);
+      box-shadow: 0 4px 0 #b21b40, 0 6px 14px rgba(255, 71, 126, 0.4);
+      border: none;
+      border-radius: 9999px;
+      color: #fff;
+      font-family: 'Jua', sans-serif;
+      font-size: 1.1rem;
+      padding: 0 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px) scale(1.03);
+      filter: brightness(1.1);
+    }
+    .btn-submit:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 #b21b40;
+    }
+
+    .status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.76rem;
+      color: #c4b5fd;
+      padding: 0 6px;
+      min-height: 22px;
+    }
+
+    .status-msg {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .combo-badge {
+      font-family: 'Jua', sans-serif;
+      font-size: 0.8rem;
+      background: linear-gradient(135deg, #ffca28, #f59e0b);
+      color: #3d1d00;
+      padding: 2px 10px;
+      border-radius: 999px;
+      display: none;
+      box-shadow: 0 2px 8px rgba(245, 158, 11, 0.5);
+      animation: comboPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes comboPop {
+      0% { transform: scale(0.5); }
+      100% { transform: scale(1); }
+    }
+
+    /* Recommended Quick Word Chips */
+    .quick-tags {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 5px;
+      overflow-x: auto;
+      padding: 2px 0;
+      scrollbar-width: none;
+    }
+    .quick-tags::-webkit-scrollbar { display: none; }
+
+    .tag-chip {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 999px;
+      font-size: 0.72rem;
+      color: #e5e3f5;
+      padding: 3px 10px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+
+    .tag-chip:hover {
+      background: linear-gradient(135deg, rgba(255, 107, 139, 0.3), rgba(255, 209, 102, 0.3));
+      border-color: #ffd166;
+      color: #fff;
+      transform: scale(1.05);
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(14, 11, 26, 0.88);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 50;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      padding: 16px;
+      backdrop-filter: blur(8px);
+    }
+
+    .modal-backdrop.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      background: linear-gradient(160deg, #272140 0%, #1a162c 100%);
+      border: 2px solid #ff6b8b;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 107, 139, 0.3);
+      border-radius: 28px;
+      width: 100%;
+      max-width: 420px;
+      padding: 24px 20px;
+      text-align: center;
+      transform: scale(0.9);
+      transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+      max-height: 94vh;
+      overflow-y: auto;
+    }
+
+    .modal-card::-webkit-scrollbar { display: none; }
+    .modal-card { scrollbar-width: none; }
+
+    .modal-backdrop.active .modal-card { transform: scale(1); }
+
+    .modal-emoji {
+      font-size: 2.8rem;
+      margin-bottom: 4px;
+      display: inline-block;
+      animation: modalBounce 1s infinite alternate ease-in-out;
+    }
+
+    @keyframes modalBounce {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-8px); }
+    }
+
+    .modal-title {
+      font-family: 'Jua', sans-serif;
+      font-size: 1.85rem;
+      color: #ff6b8b;
+      text-shadow: 0 2px 10px rgba(255, 107, 139, 0.4);
+      margin-bottom: 4px;
+    }
+
+    .modal-subtitle {
+      font-size: 0.82rem;
+      color: #ffd166;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .modal-body {
+      font-size: 0.92rem;
+      color: #d1cbe5;
+      line-height: 1.5;
+      margin: 10px 0 20px 0;
+    }
+
+    /* Guide Steps Box in Start Modal */
+    .guide-box {
+      background: rgba(18, 15, 30, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 18px;
+      padding: 12px 14px;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .guide-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .guide-num {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ffd166, #ff8da6);
+      color: #1e1b2e;
+      font-family: 'Jua', sans-serif;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .guide-content h4 {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 2px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .guide-content p {
+      font-size: 0.74rem;
+      color: #b9b3d4;
+      line-height: 1.4;
+    }
+
+    .guide-content b {
+      color: #ffd166;
+    }
+
+    /* Difficulty Selection Cards */
+    .diff-selector-title {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #e5e3f5;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .diff-group {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .diff-btn {
+      background: rgba(22, 19, 38, 0.9);
+      border: 2px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      padding: 8px 4px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .diff-btn:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.35);
+    }
+
+    .diff-btn.active {
+      transform: translateY(-2px) scale(1.04);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+    }
+
+    .diff-btn[data-diff="easy"].active {
+      border-color: #06d6a0;
+      background: linear-gradient(160deg, rgba(6, 214, 160, 0.25), rgba(4, 120, 87, 0.25));
+    }
+    .diff-btn[data-diff="normal"].active {
+      border-color: #ffd166;
+      background: linear-gradient(160deg, rgba(255, 209, 102, 0.25), rgba(180, 83, 9, 0.25));
+    }
+    .diff-btn[data-diff="hard"].active {
+      border-color: #ff477e;
+      background: linear-gradient(160deg, rgba(255, 71, 126, 0.25), rgba(178, 27, 64, 0.25));
+    }
+
+    .diff-icon { font-size: 1.25rem; }
+    .diff-name {
+      font-family: 'Jua', sans-serif;
+      font-size: 0.9rem;
+      color: #fff;
+    }
+    .diff-desc {
+      font-size: 0.65rem;
+      color: #9d9bb3;
+      font-weight: 700;
+    }
+
+    .score-summary {
+      background: rgba(18, 15, 30, 0.7);
+      border-radius: 18px;
+      padding: 12px;
+      margin-bottom: 18px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .summary-box { display: flex; flex-direction: column; }
+    .summary-title { font-size: 0.72rem; color: #a49ebd; font-weight: 700; }
+    .summary-val {
+      font-family: 'Jua', sans-serif;
+      font-size: 1.35rem;
+      color: #ffd166;
+      margin-top: 2px;
+    }
+
+    .modal-actions-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-action {
+      background: linear-gradient(135deg, #06d6a0, #059669);
+      color: #fff;
+      font-family: 'Jua', sans-serif;
+      font-size: 1.2rem;
+      padding: 11px 20px;
+      border: none;
+      border-radius: 9999px;
+      cursor: pointer;
+      box-shadow: 0 5px 0 #047857, 0 8px 18px rgba(6, 214, 160, 0.35);
+      transition: all 0.2s ease;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn-action:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.1);
+    }
+    .btn-action:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 #047857;
+    }
+
+    .btn-action-sub {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #e5e3f5;
+      font-family: 'Jua', sans-serif;
+      font-size: 1.05rem;
+      padding: 11px 16px;
+      border-radius: 9999px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+    .btn-action-sub:hover {
+      background: rgba(255, 255, 255, 0.18);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+  <!-- Ambient floating sparkles -->
+  <div class="bg-sparkle" style="top: 20%; left: 15%; animation-delay: 0s;"></div>
+  <div class="bg-sparkle" style="top: 75%; left: 85%; animation-delay: 2s;"></div>
+  <div class="bg-sparkle" style="top: 45%; left: 90%; animation-delay: 4s;"></div>
+  <div class="bg-sparkle" style="top: 80%; left: 10%; animation-delay: 1.5s;"></div>
+
+  <!-- Main Game Frame (Strictly 100dvh No-Scroll) -->
+  <div class="game-wrapper">
+    <header>
+      <div class="brand-title">
+        <div class="brand-row">
+          <span class="brand-logo-icon">🍬</span>
+          <h1>꼬꼬단 블록스</h1>
+          <span class="diff-badge diff-normal" id="headerDiffBadge" title="클릭하여 난이도 변경">🟡 보통맛</span>
+        </div>
+        <span class="badge-sub">말랑말랑 한국어 단어 퍼즐</span>
+      </div>
+
+      <div class="header-actions">
+        <div class="stats-card">
+          <div class="stat-pill">
+            <span class="stat-label">점수</span>
+            <span class="stat-val" id="scoreDisplay">0</span>
+          </div>
+          <div class="stat-pill">
+            <span class="stat-label">최고</span>
+            <span class="stat-val" id="highScoreDisplay">0</span>
+          </div>
+          <div class="stat-pill">
+            <span class="stat-label">턴</span>
+            <span class="stat-val" id="turnDisplay">1</span>
+          </div>
+        </div>
+        <button class="btn-sound" id="btnHelp" title="게임 방법 보기" aria-label="게임 방법">❓</button>
+        <button class="btn-sound" id="soundToggle" title="음소거 토글" aria-label="사운드 온오프">🔔</button>
+      </div>
+    </header>
+
+    <!-- 8x7 Grid Board Container -->
+    <div class="board-container" id="boardContainer">
+      <div class="danger-zone">
+        <span class="danger-label">위험선 (DANGER)</span>
+      </div>
+      <div class="grid" id="gridBoard"></div>
+      <canvas id="fxCanvas"></canvas>
+    </div>
+
+    <!-- Capsule User Input Section -->
+    <div class="input-section">
+      <div class="input-row">
+        <input 
+          type="text" 
+          id="wordInput" 
+          class="hint-input" 
+          placeholder="단어와 어울리는 연상 힌트 입력 (예: 바다, 달콤, 눈사람...)" 
+          autocomplete="off" 
+          spellcheck="false"
+          maxlength="15"
+        >
+        <button class="btn-submit" id="btnSubmit">
+          <span>발사</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </button>
+      </div>
+
+      <div class="status-bar">
+        <div class="status-msg" id="statusMessage">
+          <span>💡 보드의 단어를 보고 잘 어울리는 연상어를 맞춰보세요!</span>
+        </div>
+        <div class="combo-badge" id="comboBadge">2연속 콤보! ✨</div>
+      </div>
+
+      <!-- Quick Word Hint Chips -->
+      <div class="quick-tags" id="quickTags">
+        <span class="tag-chip" onclick="applySampleHint('바다')">#바다</span>
+        <span class="tag-chip" onclick="applySampleHint('여름')">#여름</span>
+        <span class="tag-chip" onclick="applySampleHint('디저트')">#디저트</span>
+        <span class="tag-chip" onclick="applySampleHint('우주')">#우주</span>
+        <span class="tag-chip" onclick="applySampleHint('행복')">#행복</span>
+        <span class="tag-chip" onclick="applySampleHint('학교')">#학교</span>
+        <span class="tag-chip" onclick="applySampleHint('겨울')">#겨울</span>
+        <span class="tag-chip" onclick="applySampleHint('동물')">#동물</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Start & How to Play Modal (Intro Screen) -->
+  <div class="modal-backdrop active" id="startModal">
+    <div class="modal-card">
+      <div class="modal-emoji">🧩</div>
+      <h2 class="modal-title">꼬꼬단 블록스</h2>
+      <div class="modal-subtitle">✨ 꼬리에 꼬리를 무는 단어 젤리 배틀! ✨</div>
+
+      <!-- Elementary Student 3-Step Guide -->
+      <div class="guide-box">
+        <div class="guide-item">
+          <span class="guide-num">1</span>
+          <div class="guide-content">
+            <h4>🧠 생각하고 입력하기</h4>
+            <p>화면의 단어와 어울리는 <b>연관 낱말</b>을 입력창에 적고 엔터를 쳐요! (예: '사과'가 보이면 '빨강'이나 '과일')</p>
+          </div>
+        </div>
+
+        <div class="guide-item">
+          <span class="guide-num">2</span>
+          <div class="guide-content">
+            <h4>💥 같은 색 연쇄 팡팡!</h4>
+            <p>AI가 1등 단어를 찾아내면, <b>그 단어와 상하좌우로 연결된 같은 색 젤리들이 팡!</b> 터져요.</p>
+          </div>
+        </div>
+
+        <div class="guide-item">
+          <span class="guide-num">3</span>
+          <div class="guide-content">
+            <h4>⚠️ 주의할 점</h4>
+            <p>화면에 있는 단어를 똑같이 쓰면 <b>🔒자물쇠</b>로 잠겨요! 젤리가 <b>위험선</b>까지 넘치지 않게 지켜주세요.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Difficulty Selector -->
+      <div class="diff-selector-title">
+        <span>🎮 난이도를 선택해 보세요</span>
+      </div>
+      <div class="diff-group" id="startDiffGroup">
+        <button type="button" class="diff-btn" data-diff="easy">
+          <span class="diff-icon">🟢</span>
+          <span class="diff-name">순한맛</span>
+          <span class="diff-desc">턴당 1개 추가</span>
+        </button>
+        <button type="button" class="diff-btn active" data-diff="normal">
+          <span class="diff-icon">🟡</span>
+          <span class="diff-name">보통맛</span>
+          <span class="diff-desc">턴당 2개 추가</span>
+        </button>
+        <button type="button" class="diff-btn" data-diff="hard">
+          <span class="diff-icon">🔴</span>
+          <span class="diff-name">매운맛</span>
+          <span class="diff-desc">턴당 3개 추가</span>
+        </button>
+      </div>
+
+      <button class="btn-action" id="btnStartGame">
+        <span>🎮 게임 시작하기!</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Macaron Modal Window (Game Over) -->
+  <div class="modal-backdrop" id="gameOverModal">
+    <div class="modal-card">
+      <div class="modal-emoji">🧁</div>
+      <h2 class="modal-title">GAME OVER</h2>
+      <p class="modal-body">블록이 위험 경계선을 넘어섰어요!<br>같은 색 젤리 블록을 모아 연쇄 폭발을 노려보세요.</p>
+      
+      <div class="score-summary">
+        <div class="summary-box">
+          <span class="summary-title">최종 점수</span>
+          <span class="summary-val" id="finalScore">0</span>
+        </div>
+        <div class="summary-box">
+          <span class="summary-title">버틴 턴 수</span>
+          <span class="summary-val" id="finalTurns">0</span>
+        </div>
+      </div>
+
+      <div class="modal-actions-row">
+        <button class="btn-action-sub" id="btnChangeDiff">⚙️ 난이도 변경</button>
+        <button class="btn-action" id="btnRestart">🔄 다시 도전하기</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    class JellySoundEngine {
+      constructor() {
+        this.ctx = null;
+        this.muted = false;
+      }
+
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          this.ctx = new AudioContext();
+        }
+        if (this.ctx && this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
+      }
+
+      toggleMute() {
+        this.muted = !this.muted;
+        return this.muted;
+      }
+
+      playTargetLock() {
+        if (this.muted) return;
+        this.init();
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(520, now);
+        osc.frequency.exponentialRampToValueAtTime(1040, now + 0.18);
+
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.2);
+      }
+
+      playWarningBuzzer() {
+        if (this.muted) return;
+        this.init();
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(180, now);
+        osc.frequency.setValueAtTime(130, now + 0.1);
+
+        gain.gain.setValueAtTime(0.22, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.26);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.26);
+      }
+
+      playPopExplosion(count = 1) {
+        if (this.muted) return;
+        this.init();
+        const now = this.ctx.currentTime;
+        
+        for (let i = 0; i < Math.min(count, 5); i++) {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          const delay = i * 0.035;
+
+          osc.type = 'sine';
+          const baseFreq = 340 + i * 90;
+          osc.frequency.setValueAtTime(baseFreq, now + delay);
+          osc.frequency.exponentialRampToValueAtTime(90, now + delay + 0.18);
+
+          gain.gain.setValueAtTime(0.26, now + delay);
+          gain.gain.linearRampToValueAtTime(0.01, now + delay + 0.2);
+
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now + delay);
+          osc.stop(now + delay + 0.2);
+        }
+      }
+
+      playComboSound(comboLevel) {
+        if (this.muted) return;
+        this.init();
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+
+        osc.type = 'triangle';
+        const notes = [523.25, 659.25, 783.99, 1046.50, 1318.51, 1567.98];
+        const freq = notes[Math.min(comboLevel, notes.length - 1)];
+
+        osc.frequency.setValueAtTime(freq, now);
+        osc.frequency.exponentialRampToValueAtTime(freq * 1.3, now + 0.12);
+
+        gain.gain.setValueAtTime(0.18, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.28);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.28);
+      }
+
+      playGameOver() {
+        if (this.muted) return;
+        this.init();
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(280, now);
+        osc.frequency.linearRampToValueAtTime(80, now + 0.45);
+
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.5);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.5);
+      }
+    }
+
+    const sfx = new JellySoundEngine();
+
+    const SEMANTIC_DICTIONARY = {
+      // 1. 자연 & 환경
+      "바다": { vec: [1.0, 0.3, 0.0, 0.0, 0.1, 0.8, 0.1, 0.2, 0.5, 0.0], tags: ["파도", "물", "수영", "여름", "모래사장", "해변", "고래", "물고기", "휴가", "푸른색", "깊다", "소금", "항구", "동해", "물놀이"] },
+      "하늘": { vec: [0.9, 0.0, 0.0, 0.0, 0.3, 0.7, 0.3, 0.2, 0.7, 0.0], tags: ["구름", "푸른색", "비행기", "태양", "새", "높다", "맑음", "노을", "공기", "바람", "날씨", "파란색"] },
+      "태양": { vec: [0.8, 0.0, 0.0, 0.0, 0.2, 0.4, 0.9, 0.0, 0.9, 0.1], tags: ["햇빛", "여름", "뜨겁다", "낮", "불", "빛", "아침", "일출", "붉은색", "우주", "에너지", "더위"] },
+      "구름": { vec: [0.9, 0.0, 0.0, 0.0, 0.1, 0.5, 0.2, 0.0, 0.9, 0.0], tags: ["비", "하늘", "하얀색", "뭉게구름", "솜사탕", "날씨", "그늘", "번개", "흐림"] },
+      "바람": { vec: [0.8, 0.0, 0.0, 0.0, 0.2, 0.3, 0.2, 0.0, 0.9, 0.0], tags: ["시원함", "태풍", "부채", "선풍기", "공기", "살랑살랑", "가을", "추위", "연날리기"] },
+      "숲": { vec: [1.0, 0.7, 0.0, 0.0, 0.3, 0.8, 0.1, 0.0, 0.5, 0.0], tags: ["나무", "초록색", "산림", "동물", "등산", "피톤치드", "휴식", "자연", "그늘", "산소"] },
+      "나무": { vec: [0.9, 0.4, 0.1, 0.2, 0.1, 0.4, 0.1, 0.0, 0.6, 0.1], tags: ["열매", "사과나무", "단풍", "초록색", "기둥", "나뭇잎", "숲", "종이", "뿌리", "목재"] },
+      "꽃": { vec: [0.9, 0.3, 0.1, 0.1, 0.7, 0.3, 0.0, 0.0, 0.8, 0.0], tags: ["향기", "봄", "나비", "꿀벌", "아름다움", "장미", "튤립", "선물", "화단", "꽃잎", "식물"] },
+      "강": { vec: [0.9, 0.3, 0.0, 0.0, 0.1, 0.7, 0.1, 0.2, 0.4, 0.0], tags: ["물", "물고기", "흐르다", "다리", "배", "시원함", "한강", "낚시", "강변"] },
+      "산": { vec: [0.9, 0.4, 0.0, 0.0, 0.3, 0.9, 0.1, 0.0, 0.5, 0.0], tags: ["등산", "정상", "단풍", "바위", "숲", "높다", "야호", "자연", "계곡"] },
+      "별": { vec: [0.7, 0.0, 0.0, 0.0, 0.5, 0.6, 0.9, 0.0, 0.4, 0.2], tags: ["밤하늘", "반짝", "우주", "별자리", "소원", "야경", "은하수", "달"] },
+      "달": { vec: [0.8, 0.0, 0.0, 0.0, 0.4, 0.6, 0.9, 0.0, 0.4, 0.1], tags: ["밤", "보름달", "토끼", "우주", "초승달", "노란색", "달맞이", "추석"] },
+      "무지개": { vec: [0.9, 0.0, 0.0, 0.0, 0.8, 0.5, 0.2, 0.0, 0.9, 0.0], tags: ["일곱색깔", "비온뒤", "하늘", "아름다움", "희망", "빨주노초파남보", "햇빛"] },
+
+      // 2. 동물 & 생물
+      "호랑이": { vec: [0.5, 1.0, 0.0, 0.0, 0.2, 0.4, 0.0, 0.1, 0.0, 0.0], tags: ["동물", "맹수", "줄무늬", "곶감", "어흥", "가죽", "포식자", "밀림", "용맹", "꼬리"] },
+      "사자": { vec: [0.5, 1.0, 0.0, 0.0, 0.2, 0.4, 0.0, 0.1, 0.0, 0.0], tags: ["동물", "맹수", "갈기", "밀림의왕", "사파리", "어흥", "아프리카", "초원"] },
+      "강아지": { vec: [0.2, 1.0, 0.0, 0.0, 0.9, 0.3, 0.0, 0.0, 0.0, 0.0], tags: ["반려견", "멍멍", "귀여움", "꼬리", "산책", "뼈다귀", "충성", "친구", "털", "개"] },
+      "고양이": { vec: [0.2, 1.0, 0.0, 0.0, 0.8, 0.3, 0.0, 0.0, 0.0, 0.0], tags: ["야옹", "귀여움", "털", "생선", "쥐", "발바닥", "꾹꾹이", "반려묘", "낮잠"] },
+      "토끼": { vec: [0.4, 1.0, 0.0, 0.0, 0.7, 0.3, 0.0, 0.0, 0.0, 0.0], tags: ["당근", "귀", "깡충깡충", "하얀색", "귀여움", "거북이", "달", "풀"] },
+      "돌고래": { vec: [0.8, 1.0, 0.0, 0.0, 0.7, 0.6, 0.1, 0.1, 0.0, 0.0], tags: ["바다", "지능", "점프", "헤엄", "초음파", "귀여움", "물", "친구"] },
+      "고래": { vec: [0.8, 1.0, 0.0, 0.0, 0.4, 0.6, 0.1, 0.1, 0.0, 0.0], tags: ["바다", "거대함", "물뿜기", "포유류", "푸른바다", "헤엄"] },
+      "펭귄": { vec: [0.7, 1.0, 0.0, 0.0, 0.6, 0.5, 0.0, 0.0, 0.9, 0.0], tags: ["남극", "얼음", "추위", "뒤뚱뒤뚱", "새", "물고기", "겨울", "눈"] },
+      "판다": { vec: [0.5, 1.0, 0.2, 0.0, 0.8, 0.4, 0.0, 0.0, 0.0, 0.0], tags: ["대나무", "흑백", "곰", "중국", "귀여움", "낮잠", "동물원"] },
+      "꿀벌": { vec: [0.7, 0.9, 0.4, 0.0, 0.3, 0.3, 0.1, 0.0, 0.6, 0.1], tags: ["꿀", "꽃", "침", "날개", "노란색", "곤충", "벌집", "부지런함"] },
+      "나비": { vec: [0.8, 0.9, 0.1, 0.0, 0.6, 0.3, 0.0, 0.0, 0.8, 0.0], tags: ["꽃", "날개", "봄", "애벌레", "변신", "아름다움", "훨훨"] },
+      "다람쥐": { vec: [0.8, 1.0, 0.3, 0.0, 0.6, 0.5, 0.0, 0.0, 0.6, 0.0], tags: ["도토리", "볼주머니", "나무", "숲", "가을", "귀여움", "꼬리"] },
+
+      // 3. 음식 & 디저트
+      "사과": { vec: [0.4, 0.0, 1.0, 0.2, 0.2, 0.0, 0.0, 0.0, 0.5, 0.0], tags: ["과일", "빨강", "백설공주", "나무", "달콤", "맛있다", "가을", "비타민", "아침"] },
+      "딸기": { vec: [0.4, 0.0, 1.0, 0.2, 0.4, 0.0, 0.0, 0.0, 0.6, 0.0], tags: ["과일", "빨강", "달콤", "케이크", "씨앗", "봄", "새콤달콤", "디저트"] },
+      "수박": { vec: [0.4, 0.0, 1.0, 0.2, 0.3, 0.0, 0.0, 0.0, 1.0, 0.0], tags: ["여름", "과일", "시원함", "초록색", "빨간색", "씨앗", "화채", "갈증"] },
+      "아이스크림": { vec: [0.0, 0.0, 1.0, 0.2, 0.6, 0.1, 0.0, 0.0, 0.9, 0.0], tags: ["차갑다", "달콤", "여름", "디저트", "콘", "녹다", "초코", "바닐라"] },
+      "초콜릿": { vec: [0.0, 0.0, 1.0, 0.2, 0.7, 0.0, 0.0, 0.0, 0.1, 0.0], tags: ["달콤", "갈색", "카카오", "간식", "밸런타인데이", "선물", "디저트"] },
+      "피자": { vec: [0.0, 0.0, 1.0, 0.3, 0.5, 0.2, 0.0, 0.1, 0.0, 0.0], tags: ["치즈", "토핑", "도우", "오븐", "이탈리아", "간식", "배달", "맛있다"] },
+      "라면": { vec: [0.0, 0.0, 1.0, 0.3, 0.5, 0.1, 0.0, 0.0, 0.2, 0.0], tags: ["면", "국물", "매콤", "야식", "끓이다", "분식", "냄비", "김치"] },
+      "케이크": { vec: [0.0, 0.0, 1.0, 0.2, 0.9, 0.1, 0.0, 0.0, 0.1, 0.0], tags: ["생일", "촛불", "축하", "생크림", "파티", "달콤", "선물", "디저트"] },
+      "빵": { vec: [0.0, 0.0, 1.0, 0.2, 0.5, 0.2, 0.0, 0.0, 0.1, 0.0], tags: ["베이커리", "밀가루", "토스트", "버터", "잼", "아침식사", "간식"] },
+      "우유": { vec: [0.2, 0.1, 1.0, 0.2, 0.3, 0.1, 0.0, 0.0, 0.1, 0.3], tags: ["하얀색", "칼슘", "소", "건강", "시리얼", "고소함", "음료"] },
+
+      // 4. 사물 & 학용품
+      "연필": { vec: [0.1, 0.0, 0.0, 1.0, 0.0, 0.1, 0.2, 0.0, 0.0, 1.0], tags: ["필기구", "지우개", "공부", "학교", "쓰다", "공책", "흑연", "필통", "심"] },
+      "지우개": { vec: [0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0], tags: ["지우다", "연필", "학용품", "필통", "공부", "틀림", "수정"] },
+      "공책": { vec: [0.1, 0.0, 0.0, 1.0, 0.0, 0.1, 0.1, 0.0, 0.0, 1.0], tags: ["필기", "종이", "공부", "숙제", "학교", "연필", "글씨"] },
+      "가방": { vec: [0.0, 0.0, 0.0, 1.0, 0.1, 0.1, 0.0, 0.3, 0.0, 0.9], tags: ["책가방", "등교", "메다", "소지품", "학교", "물건", "보관"] },
+      "가위": { vec: [0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.1, 0.0, 0.0, 0.8], tags: ["자르다", "종이", "만들기", "미술", "칼", "학용품", "손잡이"] },
+      "책": { vec: [0.0, 0.0, 0.0, 0.9, 0.3, 0.2, 0.3, 0.0, 0.0, 1.0], tags: ["독서", "도서관", "지식", "이야기", "글자", "공부", "표지", "교과서"] },
+      "시계": { vec: [0.0, 0.0, 0.0, 1.0, 0.1, 0.1, 0.4, 0.0, 0.0, 0.4], tags: ["시간", "알람", "바늘", "분침", "초침", "약속", "아침", "벽시계"] },
+      "우산": { vec: [0.2, 0.0, 0.0, 1.0, 0.1, 0.1, 0.0, 0.0, 1.0, 0.1], tags: ["비", "장마", "소나기", "비옷", "장화", "젖다", "방수", "펼치다"] },
+      "안경": { vec: [0.0, 0.0, 0.0, 1.0, 0.1, 0.0, 0.3, 0.0, 0.0, 0.7], tags: ["눈", "시력", "렌즈", "얼굴", "공부", "선글라스", "안경테"] },
+
+      // 5. 감정 & 마음
+      "행복": { vec: [0.2, 0.1, 0.2, 0.0, 1.0, 0.2, 0.0, 0.0, 0.3, 0.2], tags: ["기쁨", "미소", "웃음", "가족", "사랑", "즐거움", "만족", "축하"] },
+      "사랑": { vec: [0.1, 0.2, 0.1, 0.0, 1.0, 0.2, 0.0, 0.0, 0.3, 0.1], tags: ["하트", "고백", "부모님", "연인", "가족", "따뜻함", "마음", "포옹"] },
+      "슬픔": { vec: [0.1, 0.0, 0.0, 0.0, 1.0, 0.1, 0.0, 0.0, 0.5, 0.0], tags: ["눈물", "울음", "이별", "아픔", "위로", "속상함", "우울"] },
+      "용기": { vec: [0.1, 0.1, 0.0, 0.0, 1.0, 0.1, 0.1, 0.1, 0.0, 0.5], tags: ["도전", "씩씩함", "영웅", "자신감", "극복", "두려움없음", "멋지다"] },
+      "희망": { vec: [0.3, 0.1, 0.0, 0.0, 1.0, 0.2, 0.2, 0.0, 0.3, 0.3], tags: ["미래", "꿈", "빛", "소원", "긍정", "날개", "기대"] },
+
+      // 6. 과학, 기술, 우주
+      "우주": { vec: [0.6, 0.0, 0.0, 0.0, 0.3, 0.9, 1.0, 0.5, 0.0, 0.5], tags: ["외계인", "로켓", "별", "달", "나사", "우주선", "행성", "무중력", "은하", "블랙홀"] },
+      "로봇": { vec: [0.0, 0.0, 0.0, 0.7, 0.1, 0.2, 1.0, 0.4, 0.0, 0.6], tags: ["인공지능", "기계", "철", "미래", "조종", "자동", "컴퓨터", "변신"] },
+      "컴퓨터": { vec: [0.0, 0.0, 0.0, 0.8, 0.1, 0.2, 1.0, 0.1, 0.0, 0.9], tags: ["모니터", "키보드", "마우스", "인터넷", "게임", "프로그래밍", "화면"] },
+      "로켓": { vec: [0.2, 0.0, 0.0, 0.6, 0.2, 0.6, 1.0, 0.9, 0.0, 0.5], tags: ["발사", "우주", "엔진", "불꽃", "비행", "연료", "달나라", "우주선"] },
+
+      // 7. 교통 & 탈것
+      "비행기": { vec: [0.3, 0.0, 0.0, 0.6, 0.3, 0.6, 0.7, 1.0, 0.2, 0.1], tags: ["공항", "하늘", "날개", "여행", "조종사", "승무원", "해외", "구름"] },
+      "자동차": { vec: [0.0, 0.0, 0.0, 0.7, 0.1, 0.3, 0.6, 1.0, 0.0, 0.1], tags: ["바퀴", "운전", "핸들", "도로", "신호등", "고속도로", "주차", "기름"] },
+      "자전거": { vec: [0.2, 0.0, 0.0, 0.8, 0.5, 0.4, 0.2, 1.0, 0.3, 0.2], tags: ["페달", "바퀴", "헬멧", "운동", "따릉이", "체인", "공원", "바람"] },
+      "기차": { vec: [0.1, 0.0, 0.0, 0.7, 0.3, 0.6, 0.6, 1.0, 0.1, 0.1], tags: ["철도", "기차역", "여행", "레일", "KTX", "칙칙폭폭", "승강장"] },
+      "배": { vec: [0.6, 0.1, 0.0, 0.7, 0.2, 0.7, 0.4, 1.0, 0.3, 0.1], tags: ["바다", "항구", "선장", "닻", "파도", "여객선", "항해", "물"] },
+
+      // 8. 계절 & 날씨
+      "봄": { vec: [0.8, 0.3, 0.1, 0.0, 0.7, 0.2, 0.0, 0.0, 1.0, 0.3], tags: ["꽃", "따뜻함", "새싹", "나비", "개학", "입학", "벚꽃", "포근함"] },
+      "여름": { vec: [0.8, 0.2, 0.4, 0.1, 0.6, 0.4, 0.0, 0.2, 1.0, 0.1], tags: ["덥다", "바다", "방학", "수박", "선풍기", "에어컨", "물놀이", "매미", "휴가"] },
+      "가을": { vec: [0.8, 0.2, 0.3, 0.0, 0.6, 0.3, 0.0, 0.0, 1.0, 0.2], tags: ["단풍", "낙엽", "선선함", "수확", "독서", "추석", "감", "시원함"] },
+      "겨울": { vec: [0.8, 0.2, 0.1, 0.1, 0.5, 0.2, 0.0, 0.0, 1.0, 0.1], tags: ["춥다", "눈", "크리스마스", "눈사람", "방학", "썰매", "목도리", "장갑", "얼음"] },
+      "눈": { vec: [0.8, 0.0, 0.1, 0.0, 0.6, 0.2, 0.1, 0.0, 1.0, 0.0], tags: ["겨울", "하얀색", "눈사람", "함박눈", "눈싸움", "차갑다", "빙판"] },
+      "비": { vec: [0.9, 0.0, 0.0, 0.0, 0.3, 0.2, 0.1, 0.0, 1.0, 0.0], tags: ["우산", "장마", "소나기", "물방울", "번개", "흐림", "젖다", "구름"] },
+      "눈사람": { vec: [0.7, 0.0, 0.1, 0.5, 0.8, 0.2, 0.0, 0.0, 1.0, 0.0], tags: ["눈", "겨울", "당근코", "목도리", "동그라미", "하얀색", "추위", "놀이"] },
+
+      // 9. 장소 & 건물
+      "학교": { vec: [0.0, 0.0, 0.0, 0.3, 0.3, 1.0, 0.3, 0.2, 0.2, 1.0], tags: ["선생님", "친구", "교실", "수업", "운동장", "급식", "공부", "칠판"] },
+      "도서관": { vec: [0.0, 0.0, 0.0, 0.5, 0.4, 1.0, 0.2, 0.0, 0.0, 1.0], tags: ["책", "조용함", "독서", "사서", "책장", "열람실", "지식", "공부"] },
+      "병원": { vec: [0.0, 0.0, 0.0, 0.4, 0.4, 1.0, 0.6, 0.2, 0.0, 0.5], tags: ["의사", "간호사", "주사", "치료", "약", "아픔", "청진기", "건강"] },
+      "놀이터": { vec: [0.3, 0.0, 0.0, 0.6, 0.9, 1.0, 0.0, 0.1, 0.4, 0.3], tags: ["그네", "미끄럼틀", "시소", "모래밭", "친구", "신남", "달리기"] },
+      "공항": { vec: [0.2, 0.0, 0.0, 0.5, 0.5, 1.0, 0.7, 1.0, 0.2, 0.1], tags: ["비행기", "여권", "여행", "캐리어", "활주로", "출국", "탑승"] }
+    };
+
+    function cosineSimilarity(vecA, vecB) {
+      if (!vecA || !vecB) return 0;
+      let dot = 0, normA = 0, normB = 0;
+      for (let i = 0; i < vecA.length; i++) {
+        dot += vecA[i] * vecB[i];
+        normA += vecA[i] * vecA[i];
+        normB += vecB[i] * vecB[i];
+      }
+      if (normA === 0 || normB === 0) return 0;
+      return dot / (Math.sqrt(normA) * Math.sqrt(normB));
+    }
+
+    function getOrSynthesizeVector(word) {
+      const clean = word.trim();
+      if (SEMANTIC_DICTIONARY[clean]) {
+        return SEMANTIC_DICTIONARY[clean].vec;
+      }
+      
+      const vec = [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1];
+      if (/물|바다|산|강|바람|돌|흙|자연|나무|숲/.test(clean)) vec[0] += 0.7;
+      if (/개|새|냥|호|사자|토끼|동물|물고기|벌/.test(clean)) vec[1] += 0.7;
+      if (/밥|국|떡|빵|과일|면|맛|달|짜|매|음식|간식/.test(clean)) vec[2] += 0.7;
+      if (/기|구|칼|가방|옷|모자|도구|그릇|기구/.test(clean)) vec[3] += 0.7;
+      if (/마음|기쁨|슬픔|행복|화|사랑|우정|정/.test(clean)) vec[4] += 0.7;
+      if (/원|방|집|학교|터|역|길|도시|마을/.test(clean)) vec[5] += 0.7;
+      if (/우주|별|달|컴|넷|기계|로봇|과학|기술/.test(clean)) vec[6] += 0.7;
+      if (/차|기차|배|비행기|자전거|달리|이동/.test(clean)) vec[7] += 0.7;
+      if (/봄|여름|가을|겨울|눈|비|바람|추|더/.test(clean)) vec[8] += 0.7;
+      if (/책|공부|배움|글|말|수학|과학|학교|선생/.test(clean)) vec[9] += 0.7;
+
+      return vec;
+    }
+
+    function computeWordAssociation(userQuery, candidateWord) {
+      if (!userQuery || !candidateWord) return { score: 0, percent: 0 };
+
+      const dictData = SEMANTIC_DICTIONARY[candidateWord];
+      const vecUser = getOrSynthesizeVector(userQuery);
+      const vecCand = dictData ? dictData.vec : getOrSynthesizeVector(candidateWord);
+
+      const cosine = cosineSimilarity(vecUser, vecCand);
+
+      // Deep Tag Match Check
+      let tagBonus = 0;
+      if (dictData && dictData.tags) {
+        for (const tag of dictData.tags) {
+          if (userQuery === tag) {
+            tagBonus = Math.max(tagBonus, 0.48);
+          } else if (tag.includes(userQuery) || userQuery.includes(tag)) {
+            tagBonus = Math.max(tagBonus, 0.32);
+          }
+        }
+      }
+
+      let rawScore = (cosine * 0.55) + tagBonus;
+
+      if (candidateWord.includes(userQuery) || userQuery.includes(candidateWord)) {
+        rawScore += 0.22;
+      }
+
+      const finalScore = Math.min(rawScore, 0.99);
+      const percent = Math.min(99, Math.max(20, Math.round(finalScore * 100)));
+
+      return { score: finalScore, percent };
+    }
+
+    const COLS = 8;
+    const ROWS = 7; // Optimized to 7 rows for 100% No-Scroll fit
+    const DANGER_ROW_INDEX = 1;
+    const MIN_SIMILARITY_PERCENT = 60; // 60% minimum association threshold
+
+    const DIFFICULTY_CONFIG = {
+      easy: { name: '순한맛', icon: '🟢', spawn: 1, badgeClass: 'diff-easy' },
+      normal: { name: '보통맛', icon: '🟡', spawn: 2, badgeClass: 'diff-normal' },
+      hard: { name: '매운맛', icon: '🔴', spawn: 3, badgeClass: 'diff-hard' }
+    };
+
+    const BLOCK_COLORS = ['pink', 'yellow', 'mint', 'purple'];
+    const VOCABULARY_KEYS = Object.keys(SEMANTIC_DICTIONARY);
+
+    class SemantrisBlocksGame {
+      constructor() {
+        this.difficulty = 'normal'; // 'easy', 'normal', 'hard'
+        this.grid = Array.from({ length: ROWS }, () => Array(COLS).fill(null));
+        this.score = 0;
+        this.highScore = 0;
+        this.turns = 1;
+        this.combo = 0;
+        this.isProcessingTurn = false;
+        this.gameOver = false;
+        this.isStarted = false;
+
+        this.gridEl = document.getElementById('gridBoard');
+        this.scoreEl = document.getElementById('scoreDisplay');
+        this.highScoreEl = document.getElementById('highScoreDisplay');
+        this.turnEl = document.getElementById('turnDisplay');
+        this.wordInput = document.getElementById('wordInput');
+        this.btnSubmit = document.getElementById('btnSubmit');
+        this.statusMsgEl = document.getElementById('statusMessage');
+        this.comboBadgeEl = document.getElementById('comboBadge');
+        this.headerDiffBadge = document.getElementById('headerDiffBadge');
+
+        this.initCanvas();
+        this.initEvents();
+        this.initIntroScreen();
+      }
+
+      initIntroScreen() {
+        // Pre-render the starting board in background
+        this.startNewGame(false);
+      }
+
+      setDifficulty(diffKey) {
+        if (!DIFFICULTY_CONFIG[diffKey]) return;
+        this.difficulty = diffKey;
+        const conf = DIFFICULTY_CONFIG[diffKey];
+
+        // Update header badge
+        this.headerDiffBadge.className = `diff-badge ${conf.badgeClass}`;
+        this.headerDiffBadge.innerText = `${conf.icon} ${conf.name}`;
+
+        // Update active class on difficulty buttons
+        document.querySelectorAll('#startDiffGroup .diff-btn').forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.diff === diffKey);
+        });
+      }
+
+      initCanvas() {
+        this.canvas = document.getElementById('fxCanvas');
+        this.ctx = this.canvas.getContext('2d');
+        this.particles = [];
+
+        const resize = () => {
+          const rect = this.canvas.parentElement.getBoundingClientRect();
+          this.canvas.width = rect.width;
+          this.canvas.height = rect.height;
+        };
+        window.addEventListener('resize', resize);
+        resize();
+
+        const loop = () => {
+          this.updateParticles();
+          requestAnimationFrame(loop);
+        };
+        requestAnimationFrame(loop);
+      }
+
+      spawnParticles(x, y, colorCode, count = 22) {
+        for (let i = 0; i < count; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const speed = Math.random() * 5.5 + 2;
+          this.particles.push({
+            x, y,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed - 1.5,
+            radius: Math.random() * 4.5 + 2,
+            color: colorCode,
+            isStar: Math.random() > 0.5,
+            alpha: 1,
+            decay: Math.random() * 0.025 + 0.02
+          });
+        }
+      }
+
+      updateParticles() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        for (let i = this.particles.length - 1; i >= 0; i--) {
+          const p = this.particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.15; // Gravity
+          p.alpha -= p.decay;
+
+          if (p.alpha <= 0) {
+            this.particles.splice(i, 1);
+            continue;
+          }
+
+          this.ctx.save();
+          this.ctx.globalAlpha = p.alpha;
+          this.ctx.fillStyle = p.color;
+          this.ctx.shadowBlur = 8;
+          this.ctx.shadowColor = p.color;
+
+          if (p.isStar) {
+            // Draw candy star particle
+            this.ctx.beginPath();
+            for (let s = 0; s < 5; s++) {
+              this.ctx.lineTo(
+                p.x + Math.cos((18 + s * 72) * Math.PI / 180) * p.radius * 1.5,
+                p.y - Math.sin((18 + s * 72) * Math.PI / 180) * p.radius * 1.5
+              );
+              this.ctx.lineTo(
+                p.x + Math.cos((54 + s * 72) * Math.PI / 180) * (p.radius * 0.6),
+                p.y - Math.sin((54 + s * 72) * Math.PI / 180) * (p.radius * 0.6)
+              );
+            }
+            this.ctx.closePath();
+            this.ctx.fill();
+          } else {
+            // Draw soft round jelly bead
+            this.ctx.beginPath();
+            this.ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            this.ctx.fill();
+          }
+          this.ctx.restore();
+        }
+      }
+
+      showFloatingText(x, y, text) {
+        const board = document.getElementById('boardContainer');
+        const pop = document.createElement('div');
+        pop.className = 'floating-score';
+        pop.innerText = text;
+        pop.style.left = `${x}px`;
+        pop.style.top = `${y}px`;
+        board.appendChild(pop);
+        setTimeout(() => pop.remove(), 850);
+      }
+
+      initEvents() {
+        // Difficulty button selections
+        document.querySelectorAll('#startDiffGroup .diff-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            this.setDifficulty(btn.dataset.diff);
+            sfx.playTargetLock();
+          });
+        });
+
+        // Start game button
+        document.getElementById('btnStartGame').addEventListener('click', () => {
+          document.getElementById('startModal').classList.remove('active');
+          const wasStarted = this.isStarted;
+          this.isStarted = true;
+          if (!wasStarted || this.gameOver) {
+            this.startNewGame(true);
+          } else {
+            // Reopened from help during active gameplay: resume focus
+            this.wordInput.disabled = false;
+            this.wordInput.readOnly = false;
+            setTimeout(() => {
+              this.wordInput.focus();
+            }, 100);
+          }
+          sfx.playTargetLock();
+        });
+
+        // Click help [?] button to view guide modal anytime
+        document.getElementById('btnHelp').addEventListener('click', () => {
+          if (this.isProcessingTurn) return;
+          document.getElementById('startModal').classList.add('active');
+          document.getElementById('gameOverModal').classList.remove('active');
+          sfx.playTargetLock();
+        });
+
+        // Click header badge to switch difficulty
+        this.headerDiffBadge.addEventListener('click', () => {
+          if (this.isProcessingTurn) return;
+          document.getElementById('startModal').classList.add('active');
+          document.getElementById('gameOverModal').classList.remove('active');
+        });
+
+        this.wordInput.addEventListener('keydown', (e) => {
+          if (e.isComposing || e.keyCode === 229) {
+            return;
+          }
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            this.handleSubmitWord();
+          }
+        });
+
+        this.btnSubmit.addEventListener('click', () => {
+          this.handleSubmitWord();
+        });
+
+        document.getElementById('soundToggle').addEventListener('click', () => {
+          const isMuted = sfx.toggleMute();
+          const btn = document.getElementById('soundToggle');
+          btn.innerText = isMuted ? '🔕' : '🔔';
+        });
+
+        // Restart with current difficulty
+        document.getElementById('btnRestart').addEventListener('click', () => {
+          document.getElementById('gameOverModal').classList.remove('active');
+          this.startNewGame(true);
+        });
+
+        // Change difficulty button in game over modal
+        document.getElementById('btnChangeDiff').addEventListener('click', () => {
+          document.getElementById('gameOverModal').classList.remove('active');
+          document.getElementById('startModal').classList.add('active');
+        });
+
+        document.addEventListener('click', (e) => {
+          if (this.isStarted && !this.gameOver && !e.target.closest('button') && !e.target.closest('.tag-chip') && !e.target.closest('.modal-backdrop')) {
+            this.wordInput.focus();
+          }
+        });
+      }
+
+      getAllActiveWordsOnBoard() {
+        const activeWords = new Set();
+        for (let r = 0; r < ROWS; r++) {
+          for (let c = 0; c < COLS; c++) {
+            if (this.grid[r][c]) {
+              activeWords.add(this.grid[r][c].word);
+            }
+          }
+        }
+        return activeWords;
+      }
+
+      getRandomUniqueWord() {
+        const onBoard = this.getAllActiveWordsOnBoard();
+        const pool = VOCABULARY_KEYS.filter(w => !onBoard.has(w));
+        
+        if (pool.length > 0) {
+          return pool[Math.floor(Math.random() * pool.length)];
+        }
+        return VOCABULARY_KEYS[Math.floor(Math.random() * VOCABULARY_KEYS.length)];
+      }
+
+      getRandomColor() {
+        return BLOCK_COLORS[Math.floor(Math.random() * BLOCK_COLORS.length)];
+      }
+
+      startNewGame(focusInput = true) {
+        this.grid = Array.from({ length: ROWS }, () => Array(COLS).fill(null));
+        this.score = 0;
+        this.turns = 1;
+        this.combo = 0;
+        this.gameOver = false;
+        this.isProcessingTurn = false;
+
+        // Fully reset and unlock input element
+        this.wordInput.disabled = false;
+        this.wordInput.readOnly = false;
+        this.wordInput.value = '';
+
+        this.setDifficulty(this.difficulty);
+        this.updateStatsUI();
+        const conf = DIFFICULTY_CONFIG[this.difficulty];
+        this.statusMsgEl.innerHTML = `<span>🍬 게임 시작 (${conf.name})! 보드의 단어와 어울리는 연상어를 입력해 보세요.</span>`;
+
+        // Start with bottom 3 rows (Rows 4, 5, 6 for 7 rows grid)
+        for (let r = 4; r < ROWS; r++) {
+          for (let c = 0; c < COLS; c++) {
+            const word = this.getRandomUniqueWord();
+            this.grid[r][c] = {
+              word: word,
+              color: this.getRandomColor(),
+              lockedTurns: 0,
+              id: `init-${r}-${c}-${Math.random()}`
+            };
+          }
+        }
+
+        this.renderBoard();
+        
+        // Ensure focus with DOM settlement delay
+        if (focusInput) {
+          setTimeout(() => {
+            this.wordInput.disabled = false;
+            this.wordInput.readOnly = false;
+            this.wordInput.focus();
+          }, 120);
+        }
+      }
+
+      renderBoard() {
+        this.gridEl.innerHTML = '';
+        for (let r = 0; r < ROWS; r++) {
+          for (let c = 0; c < COLS; c++) {
+            const blockData = this.grid[r][c];
+            const cell = document.createElement('div');
+            cell.className = 'cell';
+            cell.dataset.row = r;
+            cell.dataset.col = c;
+
+            if (blockData) {
+              const block = document.createElement('div');
+              block.className = `block color-${blockData.color}`;
+              block.innerText = blockData.word;
+
+              if (blockData.lockedTurns > 0) {
+                cell.classList.add('locked');
+                const lockIcon = document.createElement('span');
+                lockIcon.className = 'lock-badge';
+                lockIcon.innerText = '🔒';
+                cell.appendChild(lockIcon);
+              }
+
+              cell.appendChild(block);
+            } else {
+              cell.classList.add('empty');
+            }
+
+            this.gridEl.appendChild(cell);
+          }
+        }
+      }
+
+      async handleSubmitWord() {
+        if (this.isProcessingTurn || this.gameOver) return;
+
+        const query = this.wordInput.value.trim();
+
+        // 1. Korean IME typo & Jamo separation prevention (/^[가-힣]+$/)
+        const hangulOnlyRegex = /^[가-힣]+$/;
+        if (!hangulOnlyRegex.test(query)) {
+          sfx.playWarningBuzzer();
+          this.triggerInputShake();
+          this.flashStatusMessage("⚠️ 올바른 한글 단어를 정확히 입력해 주세요! (오타 감지)", "#ff477e");
+          this.wordInput.focus();
+          this.wordInput.select();
+          return;
+        }
+
+        // 2. Active blocks retrieval
+        const activeBlocks = [];
+        for (let r = 0; r < ROWS; r++) {
+          for (let c = 0; c < COLS; c++) {
+            if (this.grid[r][c]) {
+              activeBlocks.push({ r, c, data: this.grid[r][c] });
+            }
+          }
+        }
+
+        if (activeBlocks.length === 0) return;
+
+        // 3. Exact word prohibition rule: Lock block for 1 turn
+        const exactMatch = activeBlocks.find(item => item.data.word === query);
+        if (exactMatch) {
+          sfx.playWarningBuzzer();
+          this.triggerInputShake();
+          this.flashStatusMessage(`⛔ 화면 단어 그대로 입력 불가! <b>[${query}]</b> 1턴 잠김(🔒)!`, "#ff477e");
+
+          exactMatch.data.lockedTurns = 2;
+          this.renderBoard();
+
+          const boardEl = document.getElementById('boardContainer');
+          boardEl.style.animation = 'shakeCapsule 0.3s ease-in-out';
+          setTimeout(() => { boardEl.style.animation = ''; }, 320);
+
+          this.wordInput.value = '';
+          this.wordInput.focus();
+          return;
+        }
+
+        // 4. Semantic similarity calculation
+        let bestTarget = null;
+        let maxScore = -1;
+        let bestPercent = 0;
+
+        for (const item of activeBlocks) {
+          if (item.data.lockedTurns > 0) continue;
+
+          const { score, percent } = computeWordAssociation(query, item.data.word);
+          if (score > maxScore) {
+            maxScore = score;
+            bestPercent = percent;
+            bestTarget = item;
+          }
+        }
+
+        // 5. Minimum 60% threshold guard: Prevent wrong explosions
+        if (!bestTarget || bestPercent < MIN_SIMILARITY_PERCENT) {
+          sfx.playWarningBuzzer();
+          this.triggerInputShake();
+          this.flashStatusMessage(`🤔 연관된 단어를 찾지 못했습니다 (최고 ${bestPercent}%). 다른 힌트를 생각해보세요!`, "#ffd166");
+          this.wordInput.focus();
+          this.wordInput.select();
+          return;
+        }
+
+        // 6. Turn processing begin
+        this.isProcessingTurn = true;
+        this.wordInput.disabled = true;
+
+        // 7. 1.2s inspection pulse & badge display
+        this.statusMsgEl.innerHTML = `<span>🎯 <b>"${query}"</b> ➔ <b>[${bestTarget.data.word}]</b> (${bestPercent}%) 확인 중! ✨</span>`;
+        sfx.playTargetLock();
+
+        const targetCell = this.getCellEl(bestTarget.r, bestTarget.c);
+        if (targetCell) {
+          targetCell.classList.add('target-pulse');
+          const badgeEl = document.createElement('div');
+          badgeEl.className = 'target-eval-badge';
+          badgeEl.innerHTML = `✨ 선택됨! ${bestPercent}%`;
+          targetCell.appendChild(badgeEl);
+        }
+
+        await this.delay(1200);
+
+        // 8. Flood Fill BFS for adjacent matching colors
+        const cluster = this.findSameColorCluster(bestTarget.r, bestTarget.c);
+
+        cluster.forEach(pt => {
+          const el = this.getCellEl(pt.r, pt.c);
+          if (el) el.classList.add('cluster-glow');
+        });
+
+        await this.delay(300);
+
+        // 9. Explosion & Score Calculation
+        const colorName = bestTarget.data.color;
+        const colorHexMap = {
+          pink: '#ff6b8b',
+          yellow: '#ffd166',
+          mint: '#06d6a0',
+          purple: '#a06cd5'
+        };
+        const colorCode = colorHexMap[colorName] || '#ffd166';
+
+        sfx.playPopExplosion(cluster.length);
+
+        const baseScore = 100 * cluster.length;
+        if (cluster.length >= 3) {
+          this.combo++;
+          sfx.playComboSound(this.combo);
+        } else {
+          this.combo = 0;
+        }
+
+        const comboMultiplier = Math.max(1, this.combo);
+        const earned = baseScore * comboMultiplier;
+        this.score += earned;
+
+        if (targetCell) {
+          const rect = targetCell.getBoundingClientRect();
+          const boardRect = this.gridEl.getBoundingClientRect();
+          const px = rect.left - boardRect.left + rect.width / 2;
+          const py = rect.top - boardRect.top + rect.height / 2;
+          this.spawnParticles(px, py, colorCode, Math.min(cluster.length * 8, 36));
+          this.showFloatingText(px, py, `+${earned} ${comboMultiplier > 1 ? `(${comboMultiplier}x)` : ''}`);
+        }
+
+        cluster.forEach(pt => {
+          const el = this.getCellEl(pt.r, pt.c);
+          if (el) el.classList.add('exploding');
+          this.grid[pt.r][pt.c] = null;
+        });
+
+        await this.delay(260);
+
+        // 10. Gravity Physics
+        this.applyGravity();
+        this.renderBoard();
+        await this.delay(200);
+
+        // 11. Drop new blocks according to selected difficulty!
+        this.dropNewBlocksByDifficulty();
+        this.applyGravity();
+
+        // 12. Decrement lock counters
+        for (let r = 0; r < ROWS; r++) {
+          for (let c = 0; c < COLS; c++) {
+            if (this.grid[r][c] && this.grid[r][c].lockedTurns > 0) {
+              this.grid[r][c].lockedTurns--;
+            }
+          }
+        }
+
+        this.renderBoard();
+        await this.delay(200);
+
+        // 13. Danger Zone check (Row 0 or 1 occupied)
+        if (this.checkGameOver()) {
+          this.triggerGameOver();
+          return;
+        }
+
+        this.turns++;
+        this.endTurnRoutine();
+      }
+
+      findSameColorCluster(startR, startC) {
+        const targetColor = this.grid[startR][startC].color;
+        const queue = [{ r: startR, c: startC }];
+        const visited = Array.from({ length: ROWS }, () => Array(COLS).fill(false));
+        const cluster = [];
+
+        visited[startR][startC] = true;
+
+        const dr = [-1, 1, 0, 0];
+        const dc = [0, 0, -1, 1];
+
+        while (queue.length > 0) {
+          const { r, c } = queue.shift();
+          cluster.push({ r, c });
+
+          for (let i = 0; i < 4; i++) {
+            const nr = r + dr[i];
+            const nc = c + dc[i];
+
+            if (
+              nr >= 0 && nr < ROWS &&
+              nc >= 0 && nc < COLS &&
+              !visited[nr][nc] &&
+              this.grid[nr][nc] !== null &&
+              this.grid[nr][nc].lockedTurns === 0 &&
+              this.grid[nr][nc].color === targetColor
+            ) {
+              visited[nr][nc] = true;
+              queue.push({ r: nr, c: nc });
+            }
+          }
+        }
+
+        return cluster;
+      }
+
+      applyGravity() {
+        for (let c = 0; c < COLS; c++) {
+          let emptyRow = ROWS - 1;
+          for (let r = ROWS - 1; r >= 0; r--) {
+            if (this.grid[r][c] !== null) {
+              if (emptyRow !== r) {
+                this.grid[emptyRow][c] = this.grid[r][c];
+                this.grid[r][c] = null;
+              }
+              emptyRow--;
+            }
+          }
+        }
+      }
+
+      dropNewBlocksByDifficulty() {
+        const availableCols = [];
+        for (let c = 0; c < COLS; c++) {
+          if (this.grid[0][c] === null) {
+            availableCols.push(c);
+          }
+        }
+
+        if (availableCols.length === 0) return;
+
+        // Number of spawned blocks depending on difficulty setting
+        const spawnTarget = DIFFICULTY_CONFIG[this.difficulty].spawn;
+        availableCols.sort(() => Math.random() - 0.5);
+        const spawnCount = Math.min(spawnTarget, availableCols.length);
+
+        for (let i = 0; i < spawnCount; i++) {
+          const c = availableCols[i];
+          const uniqueWord = this.getRandomUniqueWord();
+          this.grid[0][c] = {
+            word: uniqueWord,
+            color: this.getRandomColor(),
+            lockedTurns: 0,
+            id: `drop-${Date.now()}-${c}-${i}`
+          };
+        }
+      }
+
+      checkGameOver() {
+        for (let c = 0; c < COLS; c++) {
+          if (this.grid[DANGER_ROW_INDEX][c] !== null || this.grid[0][c] !== null) {
+            return true;
+          }
+        }
+        return false;
+      }
+
+      triggerGameOver() {
+        this.gameOver = true;
+        this.isProcessingTurn = false;
+        this.wordInput.disabled = true;
+        sfx.playGameOver();
+
+        if (this.score > this.highScore) {
+          this.highScore = this.score;
+        }
+
+        document.getElementById('finalScore').innerText = this.score.toLocaleString();
+        document.getElementById('finalTurns').innerText = this.turns;
+        document.getElementById('gameOverModal').classList.add('active');
+      }
+
+      endTurnRoutine() {
+        this.isProcessingTurn = false;
+        this.wordInput.disabled = false;
+        this.wordInput.readOnly = false;
+        this.wordInput.value = '';
+        setTimeout(() => {
+          this.wordInput.focus();
+        }, 60);
+        this.updateStatsUI();
+      }
+
+      updateStatsUI() {
+        this.scoreEl.innerText = this.score.toLocaleString();
+        this.highScoreEl.innerText = this.highScore.toLocaleString();
+        this.turnEl.innerText = this.turns;
+
+        if (this.combo > 1) {
+          this.comboBadgeEl.style.display = 'block';
+          this.comboBadgeEl.innerText = `${this.combo}연속 콤보! ✨`;
+        } else {
+          this.comboBadgeEl.style.display = 'none';
+        }
+      }
+
+      getCellEl(r, c) {
+        return this.gridEl.querySelector(`.cell[data-row="${r}"][data-col="${c}"]`);
+      }
+
+      flashStatusMessage(text, color = '#ffd166') {
+        this.statusMsgEl.innerHTML = `<span style="color: ${color}">${text}</span>`;
+      }
+
+      triggerInputShake() {
+        this.wordInput.classList.remove('shake');
+        void this.wordInput.offsetWidth;
+        this.wordInput.classList.add('shake');
+        setTimeout(() => {
+          this.wordInput.classList.remove('shake');
+        }, 360);
+      }
+
+      delay(ms) {
+        return new Promise(res => setTimeout(res, ms));
+      }
+    }
+
+    function applySampleHint(word) {
+      if (!gameInstance || gameInstance.isProcessingTurn || gameInstance.gameOver) return;
+      const input = document.getElementById('wordInput');
+      input.value = word;
+      gameInstance.handleSubmitWord();
+    }
+
+    let gameInstance = null;
+    window.addEventListener('DOMContentLoaded', () => {
+      gameInstance = new SemantrisBlocksGame();
+    });
+  </script>
+</body>
+</html>
